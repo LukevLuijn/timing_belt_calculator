@@ -8,12 +8,12 @@
 typedef std::pair<uint16_t, float> Pulley;
 
 void init(int argc, char** argv);
-double calculate(const Pulley& p1, const Pulley& p2, float belt);
 void parse(std::vector<Pulley>& pulleys, std::vector<uint16_t>& belts);
-std::string get_header(const std::vector<uint16_t>& belts);
 void convert();
 void create_file(const std::vector<Pulley>& pulleys, const std::vector<uint16_t>& belts,
                  const std::vector<std::vector<std::string>>& tables);
+std::string get_header(const std::vector<uint16_t>& belts);
+double calculate(const Pulley& p1, const Pulley& p2, float belt);
 
 int main(int argc, char** argv)
 {
@@ -26,10 +26,8 @@ double calculate(const Pulley& p1, const Pulley& p2, float belt)
 {
     double b = 4 * belt - 6.28 * (p1.second + p2.second);
     double result = (b + std::sqrt(std::pow(b, 2) - 32 * std::pow((p1.second - p2.second), 2))) / 16;
-
     if (p1.second / 2 + p2.second / 2 > result)
         return -1;
-
     return result;
 }
 
@@ -69,7 +67,7 @@ void create_file(const std::vector<Pulley>& pulleys, const std::vector<uint16_t>
     std::vector<std::string> belt_table_lines(2, "|");
     belt_table_lines[0].append("belt circumference|");
     belt_table_lines[1].append("---|");
-    for(uint16_t belt : belts)
+    for (uint16_t belt : belts)
     {
         belt_table_lines[0].append(std::to_string(belt)).append("|");
         belt_table_lines[1].append("---|");
@@ -79,7 +77,7 @@ void create_file(const std::vector<Pulley>& pulleys, const std::vector<uint16_t>
     pulley_table_lines[0].append("num. teeth|");
     pulley_table_lines[1].append("---|");
     pulley_table_lines[2].append("diameter|");
-    for(const auto& pulley : pulleys)
+    for (const auto& pulley : pulleys)
     {
         pulley_table_lines[0].append(std::to_string(pulley.first)).append("|");
         pulley_table_lines[1].append("---|");
@@ -96,10 +94,9 @@ void create_file(const std::vector<Pulley>& pulleys, const std::vector<uint16_t>
 
     std::string target = "../README.md";
     Utils::FileIO::writeToFile(target, first_part, false, false);
-    for(const std::vector<std::string>& table : tables)
+    for (const std::vector<std::string>& table : tables)
         Utils::FileIO::writeToFile(target, table, true, false);
 }
-
 
 void convert()
 {
