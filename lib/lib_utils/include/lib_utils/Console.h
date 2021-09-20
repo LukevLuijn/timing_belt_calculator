@@ -19,11 +19,11 @@ namespace Utils
     public:
         enum Type
         {
-            ERROR,
-            TRANS,
-            INFO,
-            WARNING,
-            DEBUG,
+            ERROR,   /** @info verbosity: ERROR */
+            TRANS,   /** @info verbosity: TRANSITION*/
+            INFO,    /** @info verbosity: INFO*/
+            WARNING, /** @info verbosity: WARNING*/
+            DEBUG,   /** @info verbosity: DEBUG*/
         };
 
         enum Color
@@ -51,10 +51,20 @@ namespace Utils
         static std::vector<Type> not_active_types;
 
     public:
+        /**
+         * set max verbosity for program
+         *
+         * @param maxVerbosity [ERROR,TRANS,INFO,WARNING,DEBUG]
+         */
         [[maybe_unused]] static void setMaxVerbosity(uint8_t maxVerbosity = DEBUG)
         {
             max_verbosity = maxVerbosity;
         }
+        /**
+         * deactivate type
+         *
+         * @param type [ERROR,TRANS,INFO,WARNING,DEBUG]
+         */
         [[maybe_unused]] static void deactivateType(const Type& type)
         {
             if (std::find(not_active_types.begin(), not_active_types.end(), type) == not_active_types.end())
@@ -62,12 +72,24 @@ namespace Utils
                 not_active_types.emplace_back(type);
             }
         }
+        /**
+         * activate type
+         *
+         * @param type [ERROR,TRANS,INFO,WARNING,DEBUG]
+         */
         [[maybe_unused]] static void activateType(const Type& type)
         {
             not_active_types.erase(std::remove(not_active_types.begin(), not_active_types.end(), type),
                                    not_active_types.end());
         }
-
+        /**
+         * print error message
+         *
+         * @tparam T            type of argument list
+         * @param message       message to print
+         * @param vars          argument list
+         * @param printAsList   true for numbered list, false for parameter style
+         */
         template<typename T>
         [[maybe_unused]] static void error(const std::string& message, const std::vector<T>& vars,
                                            bool printAsList = false)
@@ -79,6 +101,13 @@ namespace Utils
                 print(gen_msg);
             }
         }
+        /**
+         * print error message
+         *
+         * @tparam T        type of argument
+         * @param message   message to print
+         * @param var       argument
+         */
         template<typename T>
         [[maybe_unused]] static void error(const std::string& message, T var)
         {
@@ -87,6 +116,11 @@ namespace Utils
                 print(generateMessageString(ERROR, message, std::vector<T>{var}));
             }
         }
+        /**
+         * print error message
+         *
+         * @param message message to print
+         */
         [[maybe_unused]] static void error(const std::string& message)
         {
             if (isTypeActive(ERROR))
@@ -94,6 +128,14 @@ namespace Utils
                 print(generateMessageString(ERROR, message, std::vector<int>{}));
             }
         }
+        /**
+         * print info message
+         *
+         * @tparam T            type of argument list
+         * @param message       message to print
+         * @param vars          argument list
+         * @param printAsList   true for numbered list, false for parameter style
+         */
         template<typename T>
         [[maybe_unused]] static void info(const std::string& message, const std::vector<T>& vars,
                                           bool printAsList = false)
@@ -105,6 +147,13 @@ namespace Utils
                 print(gen_msg);
             }
         }
+        /**
+         * print info message
+         *
+         * @tparam T        type of argument
+         * @param message   message to print
+         * @param var       argument
+         */
         template<typename T>
         [[maybe_unused]] static void info(const std::string& message, T var)
         {
@@ -113,6 +162,11 @@ namespace Utils
                 print(generateMessageString(INFO, message, std::vector<T>{var}));
             }
         }
+        /**
+         * print info message
+         *
+         * @param message message to print
+         */
         [[maybe_unused]] static void info(const std::string& message)
         {
             if (isTypeActive(INFO))
@@ -120,6 +174,14 @@ namespace Utils
                 print(generateMessageString(INFO, message, std::vector<int>{}));
             }
         }
+        /**
+         * print warning message
+         *
+         * @tparam T            type of argument list
+         * @param message       message to print
+         * @param vars          argument list
+         * @param printAsList   true for numbered list, false for parameter style
+         */
         template<typename T>
         [[maybe_unused]] static void warning(const std::string& message, const std::vector<T>& vars,
                                              bool printAsList = false)
@@ -131,6 +193,13 @@ namespace Utils
                 print(gen_msg);
             }
         }
+        /**
+         * print warning message
+         *
+         * @tparam T        type of argument
+         * @param message   message to print
+         * @param var       argument
+         */
         template<typename T>
         [[maybe_unused]] static void warning(const std::string& message, T var)
         {
@@ -139,6 +208,11 @@ namespace Utils
                 print(generateMessageString(WARNING, message, std::vector<T>{var}));
             }
         }
+        /**
+         * print warning message
+         *
+         * @param message message to print
+         */
         [[maybe_unused]] static void warning(const std::string& message)
         {
             if (isTypeActive(WARNING))
@@ -146,6 +220,14 @@ namespace Utils
                 print(generateMessageString(WARNING, message, std::vector<int>{}));
             }
         }
+        /**
+         * print debug message
+         *
+         * @tparam T            type of argument list
+         * @param message       message to print
+         * @param vars          argument list
+         * @param printAsList   true for numbered list, false for parameter style
+         */
         template<typename T>
         [[maybe_unused]] static void debug(const std::string& message, const std::vector<T>& vars,
                                            bool printAsList = false)
@@ -157,6 +239,13 @@ namespace Utils
                 print(gen_msg);
             }
         }
+        /**
+         * print debug message
+         *
+         * @tparam T        type of argument
+         * @param message   message to print
+         * @param var       argument
+         */
         template<typename T>
         [[maybe_unused]] static void debug(const std::string& message, T var)
         {
@@ -165,6 +254,11 @@ namespace Utils
                 print(generateMessageString(DEBUG, message, std::vector<T>{var}));
             }
         }
+        /**
+         * print debug message
+         *
+         * @param message message to print
+         */
         [[maybe_unused]] static void debug(const std::string& message)
         {
             if (isTypeActive(DEBUG))
@@ -172,6 +266,13 @@ namespace Utils
                 print(generateMessageString(DEBUG, message, std::vector<int>{}));
             }
         }
+        /**
+         * print transition message
+         *
+         * @param message   message to print
+         * @param from      state transitioning from
+         * @param to        state transitioning to
+         */
         [[maybe_unused]] static void transition(const std::string& message, const std::string& from,
                                                 const std::string& to)
         {
@@ -190,6 +291,13 @@ namespace Utils
 
             print(transMessage + transVars);
         }
+        /**
+         * convert string to colored string
+         *
+         * @param text      text to convert
+         * @param color     color to convert to
+         * @return          converted string
+         */
         static std::string convertToColor(const std::string& text, Color color)
         {
             return "\x1B[" + std::to_string(color) + "m" + text + "\033[0m";
@@ -252,10 +360,12 @@ namespace Utils
             std::string varString;
             for (std::size_t i = 0; i < vars.size(); ++i)
             {
-                std::string indexStr = convertToColor("[", BRIGHT_CYAN) + convertToColor(std::to_string(i),NORMAL_WHITE) + convertToColor("]", BRIGHT_CYAN);
+                std::string indexStr = convertToColor("[", BRIGHT_CYAN) +
+                                       convertToColor(std::to_string(i), NORMAL_WHITE) +
+                                       convertToColor("]", BRIGHT_CYAN);
 
                 varString += "  " + indexStr + convertToColor(" -> ", BRIGHT_YELLOW);
-                varString += convertToColor(vars[i], NORMAL_WHITE) + ((i != vars.size()-1) ? "\n" : "");
+                varString += convertToColor(vars[i], NORMAL_WHITE) + ((i != vars.size() - 1) ? "\n" : "");
             }
 
             std::string totString = getTypeMessage(messageType) + convertToColor(message, BRIGHT_WHITE) + " = \n";
@@ -310,6 +420,6 @@ namespace Utils
     /* static */ uint8_t Console::max_verbosity = Console::DEBUG;
     /* static */ std::vector<Console::Type> Console::not_active_types = std::vector<Console::Type>{};
 
-}// namespace utils
+}// namespace Utils
 
 #endif//LOGGER_LOGGER_H

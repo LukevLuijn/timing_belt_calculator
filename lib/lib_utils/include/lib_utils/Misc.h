@@ -13,16 +13,14 @@ namespace Utils
     class [[maybe_unused]] Misc
     {
     public:
-        [[maybe_unused]] static std::vector<std::string> divide (const std::string& str, char c)
-        {
-            std::stringstream ss(str);
-            std::string token;
-            std::vector<std::string> tokens;
-
-            while (std::getline(ss, token, c))
-                tokens.emplace_back(token);
-            return tokens;
-        }
+        /**
+         * divide string by char
+         *
+         * @param str   string to divide
+         * @param c     separator
+         * @return      list of separated words
+         */
+        [[maybe_unused]] static std::vector<std::string> divide (const std::string& str, char c);
     };
 }
 

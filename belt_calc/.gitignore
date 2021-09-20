@@ -1,0 +1,9 @@
+# Editor
+.vscode/*
+.idea/*
+.idea
+
+# Intermediate files
+build/*
+cmake-build-debug/*
+*.old

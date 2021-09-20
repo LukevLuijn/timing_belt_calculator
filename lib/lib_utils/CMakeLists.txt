@@ -23,6 +23,7 @@ set (HEADER
 set (SOURCE
         src/Command.cpp
         src/FileIO.cpp
+        src/Misc.cpp
         )
 
 #only for testing
