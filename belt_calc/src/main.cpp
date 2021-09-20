@@ -54,7 +54,7 @@ std::string get_header(const std::vector<uint16_t>& belts)
 {
     std::string line = "|P1|P2|";
     for (uint16_t belt : belts)
-        line.append("BELT=").append(std::to_string(belt)).append("|");
+        line.append("B=").append(std::to_string(belt)).append("|");
     line.append("\n|---|---|");
     for ([[maybe_unused]] uint16_t belt : belts)
         line.append("---|");
@@ -87,11 +87,11 @@ void create_file(const std::vector<Pulley>& pulleys, const std::vector<uint16_t>
     }
 
     std::vector<std::string> first_part = {title};
-    first_part.emplace_back("\n ### Belts");
+    first_part.emplace_back("\n### Belts");
     first_part.insert(first_part.end(), belt_table_lines.begin(), belt_table_lines.end());
-    first_part.emplace_back("\n ### Pulleys");
+    first_part.emplace_back("\n### Pulleys");
     first_part.insert(first_part.end(), pulley_table_lines.begin(), pulley_table_lines.end());
-    first_part.emplace_back("\n ## Distances");
+    first_part.emplace_back("\n");
 
 
     std::string target = "../README.md";
@@ -123,6 +123,7 @@ void convert()
     for (std::size_t i = 0; i < pulleys.size(); ++i)
     {
         std::vector<std::string> section;
+        section.emplace_back(std::string("## Pulley - ").append(std::to_string(pulleys[i].first)).append(" teeth"));
         section.emplace_back(get_header(belts));
         for (std::size_t j = i; j < pulleys.size(); ++j)
         {
