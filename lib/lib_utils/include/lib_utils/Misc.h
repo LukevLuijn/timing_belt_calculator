@@ -5,8 +5,10 @@
 #ifndef DAY_XX_MISC_H
 #define DAY_XX_MISC_H
 
-#include <vector>
+#include <iomanip>
+#include <ios>
 #include <string>
+#include <vector>
 
 namespace Utils
 {
@@ -21,6 +23,15 @@ namespace Utils
          * @return      list of separated words
          */
         [[maybe_unused]] static std::vector<std::string> divide (const std::string& str, char c);
+
+        template<typename T>
+        [[maybe_unused]] static std::string precision_cast(T num, uint16_t precision)
+        {
+            std::stringstream ss;
+            ss << std::fixed << std::setprecision(precision) << num;
+            return ss.str();
+        }
+
     };
 }
 

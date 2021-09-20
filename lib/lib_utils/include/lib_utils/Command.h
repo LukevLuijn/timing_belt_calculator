@@ -7,6 +7,7 @@
 
 #include <cstring>
 #include <vector>
+#include <string>
 
 namespace Utils
 {
@@ -106,10 +107,13 @@ namespace Utils
          * @return the commandline files
          */
         [[maybe_unused]] static std::vector<std::string>& getCommandLineFiles();
+        [[maybe_unused]] static void setCommandLineHelp(const std::vector<std::pair<std::string, std::string>>& options);
+        [[maybe_unused]] static void help(const std::string& title);
 
     private:
         static std::vector<CommandlineArgument> commandlineArguments; /** list containing all CommandLineArguments*/
         static std::vector<std::string> commandlineFiles;             /** list containing all file entries*/
+        static std::vector<std::pair<std::string, std::string>> options;
     };
 }// namespace Utils
 

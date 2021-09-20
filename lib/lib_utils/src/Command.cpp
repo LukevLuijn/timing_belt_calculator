@@ -3,6 +3,7 @@
 //
 
 #include <algorithm>
+#include <iostream>
 #include <stdexcept>
 
 #include "Command.h"
@@ -12,6 +13,7 @@ namespace Utils
 
     /* static */ std::vector<CommandlineArgument> Command::commandlineArguments;
     /* static */ std::vector<std::string> Command::commandlineFiles;
+    /* static */ std::vector<std::pair<std::string, std::string>> Command::options;
 
     CommandlineArgument::CommandlineArgument()
         : argumentNumber(std::numeric_limits<unsigned long>::max()), variable(), value()
@@ -114,5 +116,18 @@ namespace Utils
     /* static */ std::vector<std::string>& Command::getCommandLineFiles()
     {
         return commandlineFiles;
+    }
+    /* static */ void Command::help(const std::string& title)
+    {
+        std::cout << "usage:\t" << title << " |";
+        for(const auto& option : options)
+            std::cout << option.first << "|";
+        std::cout << std::endl;
+        for(const auto& option : options)
+            std::cout << "-" << option.first << "\t" << option.second << std::endl;
+    }
+    /* static */ void Command::setCommandLineHelp(const std::vector<std::pair<std::string, std::string>>& new_options)
+    {
+        options = new_options;
     }
 }// namespace utils
